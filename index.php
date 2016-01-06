@@ -72,7 +72,7 @@
 	</head>
 
 	<body>
-	<a href="photo">拍照</a>
+	<a href="/photo/">拍照</a>
 	<div class="wrap">
 		<div class="show" id="show">点击按钮开始抽奖</div>
 		<div class="btn">
