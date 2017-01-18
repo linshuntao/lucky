@@ -1,46 +1,41 @@
 <?php
 /**
-* 西藏承亿抽奖系统
-* 林少能
-* 10832126@qq.com
-*/
-	$dir = "images/";
-	$img = "";
-	if (is_dir($dir)){
-		if ($dh = opendir($dir)){
-			while (($file = readdir($dh))!= false){
-				if( $file<>'' && strlen($file)>2 ){
-					$img .= '"'.$file.'",';
-				}
-			}
-		}
-		$img = substr($img, 0, ( strlen($img)-1));
-}
+ * 西藏承亿抽奖系统
+ * 林少能
+ * 10832126@qq.com
+ */
 
+if (isset($_GET['name'])) {
+    $name = $_GET['name'];
+    $name = explode('，', $name);
+    foreach ($name as $key => $v) {
+        $name[$key] = '"' . $v . '"';
+    }
+    $name = implode(',', $name);
+}
 
 ?>
 <!DOCTYPE html>
 <html>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>西藏承亿抽奖系统</title>
+	<title>抽奖系统</title>
 	<head>
 	<script id="jquery_172" type="text/javascript" class="library" src="js/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript">
-		
+
 	$(function(){
-		
-		var alldata = new Array(<?php echo $img;?>);
+		var alldata = new Array(<?php echo $name; ?>);
 		var num = alldata.length - 1;
 		var show = $("#show");
 		var btn = $("#btn");
 		var open = false;
-	
+
 		function change(){
 			var randomVal = Math.round(Math.random() * num);
 			var prizeName = alldata[randomVal];
-			show.html("<img src='images/"+prizeName+"' />");
+			show.html(prizeName);
 		}
-		
+
 		function run(){
 			if(!open){
 				timer=setInterval(change,30);
@@ -52,11 +47,11 @@
 				open = false;
 			}
 		}
-		
+
 		btn.click(function(){run();})
-		
+
 	})
-		
+
 	</script>
 	<style>
 	body{ background:#fff;}
@@ -68,11 +63,18 @@
 	.btn a.stop{ background:#00a2ff;}
 	.btn a.stop:hover{ background:#008bdb;}
 	</style>
-	
+
 	</head>
 
 	<body>
-	<a href="/photo/">拍照</a>
+	<form>
+		<table>
+			<center><h2>请输入所有姓名，“，”分隔。</h2></center>
+
+			<center>姓名：<input type="text" name="name" size="250" height="100"/></center>
+			<center><input type="submit" name="submit" value="提交"/></center>
+		</table>
+	</form>
 	<div class="wrap">
 		<div class="show" id="show">点击按钮开始抽奖</div>
 		<div class="btn">
